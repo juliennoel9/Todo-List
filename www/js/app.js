@@ -1,4 +1,4 @@
-// App logic.
+// App logic.parseInt(localStorage.getItem("compteurTODO"))parseInt(localStorage.getItem("compteurTODO"))parseInt(localStorage.getItem("compteurTODO"))
 window.myApp = {};
 
 document.addEventListener('init', function(event) {
@@ -16,9 +16,19 @@ document.addEventListener('init', function(event) {
       && document.querySelector('#pendingTasksPage')
       && !document.querySelector('#pendingTasksPage ons-list-item')
     ) {
-      myApp.services.fixtures.forEach(function(data) {
-        myApp.services.tasks.create(data);
-      });
+       // myApp.services.fixtures.forEach(function(data) {
+       //   myApp.services.tasks.create(data);
+       // });
+
+      if (localStorage.getItem("compteurTODO")!=null){
+        console.log("salut");
+        for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
+          console.log(i);
+          let dataTemp = localStorage.getItem("todo-"+i);
+          myApp.services.tasks.create(dataTemp);
+        }
+      }
+      //console.log(localStorage);
     }
   }
 });

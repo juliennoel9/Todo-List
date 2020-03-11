@@ -2,6 +2,11 @@
  * App Services. This contains the logic of the application organised in modules/objects. *
  ***********************************************************************************/
 
+//localStorage.clear();
+if (localStorage.getItem("compteurTODO")==null){
+  localStorage.setItem("compteurTODO",0);
+}
+
 myApp.services = {
 
   /////////////////
@@ -11,6 +16,17 @@ myApp.services = {
 
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
+      //console.log(localStorage.getItem("compteurTODO"));
+
+      console.log(data);
+      if (!data.idCompteur){
+        console.log("good");
+        let dataStorage = data;
+        dataStorage.idCompteur = localStorage.getItem("compteurTODO");
+        window.localStorage.setItem("todo-"+localStorage.getItem("compteurTODO"),JSON.stringify(dataStorage));
+        localStorage.setItem("compteurTODO", parseInt(localStorage.getItem("compteurTODO"))+1);
+      }
+
       // Task item template.
       var taskItem = ons.createElement(
         '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +

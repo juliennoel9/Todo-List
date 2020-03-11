@@ -45,7 +45,7 @@
         <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">
         <link rel="stylesheet" href="css/style.css">
 
-        <title>Todo List - Julien Noël</title>
+        <title>Todo List</title>
     </head>
     <body>
         <!-- First navigation component: Navigator. This will remain always on top of the app. -->
@@ -75,7 +75,7 @@
                             <ons-icon icon="ion-navicon, material:md-menu" size="32px, material:24px"></ons-icon>
                         </ons-toolbar-button>
                     </div>
-                    <div class="center">ToDo - Julien Noël</div>
+                    <div class="center">ToDo</div>
                     <div class="right">
                         <!-- Toolbar-button  only visible for iOS/other. -->
                         <ons-if platform="ios other">
@@ -93,15 +93,16 @@
 
                 <!-- Auto-positioned Tabbar: top on Android, bottom on iOS/other. -->
                 <ons-tabbar id="myTabbar" position="auto">
-                    <ons-tab page="pages/pending_tasks.html" label="Pending" active>
+                    <ons-tab page="pages/pending_tasks.html" label="A faire" active>
                     </ons-tab>
-                    <ons-tab page="pages/completed_tasks.html" label="Completed">
+                    <ons-tab page="pages/pending_tasks.html" label="En cours">
+                    </ons-tab>
+                    <ons-tab page="pages/completed_tasks.html" label="Fini">
                     </ons-tab>
                 </ons-tabbar>
             </ons-page>
         </template>
 
-        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>
