@@ -1,4 +1,4 @@
-// App logic.parseInt(localStorage.getItem("compteurTODO"))parseInt(localStorage.getItem("compteurTODO"))parseInt(localStorage.getItem("compteurTODO"))
+// App logic
 window.myApp = {};
 
 document.addEventListener('init', function(event) {
@@ -21,14 +21,13 @@ document.addEventListener('init', function(event) {
        // });
 
       if (localStorage.getItem("compteurTODO")!=null){
-        console.log("salut");
         for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
-          console.log(i);
-          let dataTemp = localStorage.getItem("todo-"+i);
-          myApp.services.tasks.create(dataTemp);
+          if (typeof(localStorage.getItem("todo-"+i))!="undefined"){
+            let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
+            myApp.services.tasks.create(dataTemp);
+          }
         }
       }
-      //console.log(localStorage);
     }
   }
 });

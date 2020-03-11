@@ -16,12 +16,9 @@ myApp.services = {
 
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
-      //console.log(localStorage.getItem("compteurTODO"));
 
-      console.log(data);
-      if (!data.idCompteur){
-        console.log("good");
-        let dataStorage = data;
+      if (typeof (data.idCompteur) == "undefined"){
+        let dataStorage = JSON.parse(JSON.stringify(data));
         dataStorage.idCompteur = localStorage.getItem("compteurTODO");
         window.localStorage.setItem("todo-"+localStorage.getItem("compteurTODO"),JSON.stringify(dataStorage));
         localStorage.setItem("compteurTODO", parseInt(localStorage.getItem("compteurTODO"))+1);
