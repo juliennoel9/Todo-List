@@ -111,6 +111,8 @@ myApp.services = {
     remove: function(taskItem) {
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
 
+      console.log(taskItem.data);
+      localStorage.removeItem("todo-"+taskItem.data.idCompteur);
       myApp.services.animators.remove(taskItem, function() {
         // Remove the item before updating the categories.
         taskItem.remove();

@@ -22,7 +22,7 @@ document.addEventListener('init', function(event) {
 
       if (localStorage.getItem("compteurTODO")!=null){
         for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
-          if (typeof(localStorage.getItem("todo-"+i))!="undefined"){
+          if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
             let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
             myApp.services.tasks.create(dataTemp);
           }
