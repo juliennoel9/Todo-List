@@ -103,15 +103,23 @@ myApp.services = {
       // Add or remove the highlight.
       taskItem.classList[data.highlight ? 'add' : 'remove']('highlight');
 
+      let numIdCompteur = taskItem.data.idCompteur;
+      let nameTask = "todo-"+numIdCompteur;
+
       // Store the new data within the element.
       taskItem.data = data;
+
+      let tempData = JSON.stringify(taskItem.data);
+      let newDataParse = JSON.parse(tempData);
+      newDataParse.idCompteur = numIdCompteur;
+
+      localStorage.setItem(nameTask,JSON.stringify(newDataParse));
     },
 
     // Deletes a task item and its listeners.
     remove: function(taskItem) {
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
 
-      console.log(taskItem.data);
       localStorage.removeItem("todo-"+taskItem.data.idCompteur);
       myApp.services.animators.remove(taskItem, function() {
         // Remove the item before updating the categories.
