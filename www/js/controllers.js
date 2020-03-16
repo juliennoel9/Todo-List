@@ -78,13 +78,31 @@ myApp.controllers = {
   detailsTaskPage: function(page) {
     // Get the element passed as argument to pushPage.
     var element = page.data.element;
+    let dataTask;
+
+    if (localStorage.getItem("compteurTODO")!=null){
+      for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
+        if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
+          let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
+          if (dataTemp.title === element.querySelector('.list-item__center').textContent){
+            dataTask = dataTemp;
+          }
+        }
+      }
+    }
 
     // Fill the view with the stored data.
-    page.querySelector('#title-input').value = element.data.title;
-    page.querySelector('#category-input').value = element.data.category;
-    page.querySelector('#description-input').value = element.data.description;
-    page.querySelector('#highlight-input').checked = element.data.highlight;
-    page.querySelector('#urgent-input').checked = element.data.urgent;
+    // page.querySelector('#title-input').value = element.data.title;
+    // page.querySelector('#category-input').value = element.data.category;
+    // page.querySelector('#description-input').value = element.data.description;
+    // page.querySelector('#highlight-input').checked = element.data.highlight;
+    // page.querySelector('#urgent-input').checked = element.data.urgent;
+
+    page.querySelector('#title-input').value = dataTask.title;
+    page.querySelector('#category-input').value = dataTask.category;
+    page.querySelector('#description-input').value = dataTask.description;
+    page.querySelector('#highlight-input').checked = dataTask.highlight;
+    page.querySelector('#urgent-input').checked = dataTask.urgent;
 
     // Set button functionality to save an existing task.
     page.querySelector('[component="button/save-task"]').onclick = function() {

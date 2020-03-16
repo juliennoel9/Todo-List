@@ -17,9 +17,12 @@ myApp.services = {
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
 
+      let taskStatus = 'pending';
+
+      let dataStorage = JSON.parse(JSON.stringify(data));
       if (typeof (data.idCompteur) == "undefined"){
-        let dataStorage = JSON.parse(JSON.stringify(data));
         dataStorage.idCompteur = localStorage.getItem("compteurTODO");
+        dataStorage.status = 'pending';
         window.localStorage.setItem("todo-"+localStorage.getItem("compteurTODO"),JSON.stringify(dataStorage));
         localStorage.setItem("compteurTODO", parseInt(localStorage.getItem("compteurTODO"))+1);
       }
@@ -28,7 +31,7 @@ myApp.services = {
       var taskItem = ons.createElement(
         '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
           '<label class="left">' +
-           '<ons-checkbox></ons-checkbox>' +
+          ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
           '<div class="center">' +
             data.title +
@@ -45,7 +48,44 @@ myApp.services = {
       // Add 'completion' functionality when the checkbox changes.
       taskItem.data.onCheckboxChange = function(event) {
         myApp.services.animators.swipe(taskItem, function() {
-          var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#completed-list' : '#pending-list';
+          //var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#completed-list' : '#pending-list';
+          var listId = '#pending-list';
+          if (taskItem.parentElement.id === 'pending-list' && event.target.checked) {
+            listId = '#inProgress-list';
+            event.target.checked=false;
+            let tempNewData = JSON.stringify(dataStorage);
+            let newData = JSON.parse(tempNewData);
+            let compteur = newData.idCompteur;
+            let newTaskData = JSON.parse(localStorage.getItem('todo-'+compteur));
+            newTaskData.status = 'inProgress';
+            taskStatus = 'inProgress';
+            localStorage.setItem('todo-'+compteur, JSON.stringify(newTaskData));
+            //myApp.services.tasks.update(taskItem,newData);
+          }
+          if (taskItem.parentElement.id === 'inProgress-list' && event.target.checked){
+            listId = '#completed-list';
+            event.target.checked=true;
+            let tempNewData = JSON.stringify(dataStorage);
+            let newData = JSON.parse(tempNewData);
+            let compteur = newData.idCompteur;
+            let newTaskData = JSON.parse(localStorage.getItem('todo-'+compteur));
+            newTaskData.status = 'completed';
+            taskStatus = 'completed';
+            localStorage.setItem('todo-'+compteur, JSON.stringify(newTaskData));
+            //myApp.services.tasks.update(taskItem,newData);
+          }
+          if (taskItem.parentElement.id === 'completed-list'){
+            listId = '#pending-list';
+            event.target.checked=false;
+            let tempNewData = JSON.stringify(dataStorage);
+            let newData = JSON.parse(tempNewData);
+            let compteur = newData.idCompteur;
+            let newTaskData = JSON.parse(localStorage.getItem('todo-'+compteur));
+            newTaskData.status = 'pending';
+            taskStatus = 'pending';
+            localStorage.setItem('todo-'+compteur, JSON.stringify(newTaskData));
+            //myApp.services.tasks.update(taskItem,newData);
+          }
           document.querySelector(listId).appendChild(taskItem);
         });
       };
@@ -79,8 +119,8 @@ myApp.services = {
       }
 
       // Insert urgent tasks at the top and non urgent tasks at the bottom.
-      var pendingList = document.querySelector('#pending-list');
-      pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
+      var list = document.querySelector('#'+dataStorage.status+'-list');
+      list.insertBefore(taskItem, taskItem.data.urgent ? list.firstChild : null);
     },
 
     // Modifies the inner data and current view of an existing task.
@@ -103,24 +143,60 @@ myApp.services = {
       // Add or remove the highlight.
       taskItem.classList[data.highlight ? 'add' : 'remove']('highlight');
 
-      let numIdCompteur = taskItem.data.idCompteur;
+      let numIdCompteur;
+      let oldStatus;
+
+      // if (typeof JSON.parse(JSON.stringify(taskItem.data)).idCompteur != "undefined"){
+      //   numIdCompteur = JSON.parse(JSON.stringify(taskItem.data)).idCompteur;
+      //   oldStatus = JSON.parse(JSON.stringify(taskItem.data)).status;
+      // }else if (typeof JSON.parse(JSON.stringify(data)).idCompteur != "undefined"){
+      //   numIdCompteur = JSON.parse(JSON.stringify(data)).idCompteur;
+      //   oldStatus = JSON.parse(JSON.stringify(data)).status;
+      // }else{
+        if (localStorage.getItem("compteurTODO")!=null){
+          for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
+            if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
+              let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
+              if (dataTemp.title === JSON.parse(JSON.stringify(taskItem.data)).title && dataTemp.description === JSON.parse(JSON.stringify(taskItem.data)).description){
+                numIdCompteur = i;
+                if (typeof JSON.parse(JSON.stringify(data)).status != "undefined"){
+                  oldStatus = JSON.parse(JSON.stringify(data)).status;
+                }else {
+                  oldStatus = dataTemp.status;
+                }
+              }
+            }
+          }
+        }
+      // }
+
       let nameTask = "todo-"+numIdCompteur;
 
       // Store the new data within the element.
-      taskItem.data = data;
+      //taskItem.data = JSON.parse(JSON.stringify(data));
 
-      let tempData = JSON.stringify(taskItem.data);
+      let tempData = JSON.stringify(JSON.parse(JSON.stringify(data)));
       let newDataParse = JSON.parse(tempData);
       newDataParse.idCompteur = numIdCompteur;
-
-      localStorage.setItem(nameTask,JSON.stringify(newDataParse));
+      newDataParse.status = oldStatus;
+      if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight)) {
+        localStorage.setItem(nameTask, JSON.stringify(newDataParse));
+      }
     },
 
     // Deletes a task item and its listeners.
     remove: function(taskItem) {
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
-
-      localStorage.removeItem("todo-"+taskItem.data.idCompteur);
+      if (localStorage.getItem("compteurTODO")!=null){
+        for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
+          if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
+            let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
+            if (dataTemp.title === taskItem.parentElement.lastChild.childNodes[1].textContent){
+              localStorage.removeItem("todo-"+i);
+            }
+          }
+        }
+      }
       myApp.services.animators.remove(taskItem, function() {
         // Remove the item before updating the categories.
         taskItem.remove();
@@ -219,7 +295,7 @@ myApp.services = {
 
     // Swipe animation for task completion.
     swipe: function(listItem, callback) {
-      var animation = (listItem.parentElement.id === 'pending-list') ? 'animation-swipe-right' : 'animation-swipe-left';
+      var animation = (listItem.parentElement.id === 'completed-list') ? 'animation-swipe-left' : 'animation-swipe-right';
       listItem.classList.add('hide-children');
       listItem.classList.add(animation);
 
