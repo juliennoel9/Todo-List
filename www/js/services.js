@@ -232,6 +232,7 @@ myApp.services = {
 
       // Attach the new category to the corresponding list.
       document.querySelector('#custom-category-list').appendChild(categoryItem);
+      myApp.tempStorage.categories.push(categoryLabel);
     },
 
     // On task creation/update, updates the category list adding new categories if needed.
@@ -253,6 +254,13 @@ myApp.services = {
       if (!categoryItem) {
         // If there are no tasks under this category, remove it.
         myApp.services.categories.remove(document.querySelector('#custom-category-list ons-list-item[category-id="' + categoryId + '"]'));
+        let newCategories = [];
+        for (let i = 0; i < myApp.tempStorage.categories.length; i++) {
+          if (myApp.tempStorage.categories[i]!==categoryLabel){
+            newCategories.push(myApp.tempStorage.categories[i]);
+          }
+        }
+        myApp.tempStorage.categories = newCategories;
       }
     },
 

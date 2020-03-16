@@ -42,6 +42,19 @@ myApp.controllers = {
   // New Task Page Controller //
   ////////////////////////////
   newTaskPage: function(page) {
+
+    let selector = page.querySelector('.select-input');
+    for (let i = 0; i < myApp.tempStorage.categories.length; i++) {
+      let newChild = document.createElement("option");
+      newChild.setAttribute("value", myApp.tempStorage.categories[i]);
+      newChild.innerText = myApp.tempStorage.categories[i];
+      selector.append(newChild);
+    }
+
+    page.querySelector('[component="select/chooseCategory"]').onchange = function (event) {
+      page.querySelector('#category-input').value = event.target.selectedOptions[0].innerText;
+    };
+
     // Set button functionality to save a new task.
     Array.prototype.forEach.call(page.querySelectorAll('[component="button/save-task"]'), function(element) {
       element.onclick = function() {
@@ -103,6 +116,18 @@ myApp.controllers = {
     page.querySelector('#description-input').value = dataTask.description;
     page.querySelector('#highlight-input').checked = dataTask.highlight;
     page.querySelector('#urgent-input').checked = dataTask.urgent;
+
+    let selector = page.querySelector('.select-input');
+    for (let i = 0; i < myApp.tempStorage.categories.length; i++) {
+      let newChild = document.createElement("option");
+      newChild.setAttribute("value", myApp.tempStorage.categories[i]);
+      newChild.innerText = myApp.tempStorage.categories[i];
+      selector.append(newChild);
+    }
+
+    page.querySelector('[component="select/chooseCategory"]').onchange = function (event) {
+      page.querySelector('#category-input').value = event.target.selectedOptions[0].innerText;
+    };
 
     // Set button functionality to save an existing task.
     page.querySelector('[component="button/save-task"]').onclick = function() {
