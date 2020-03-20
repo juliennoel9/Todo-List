@@ -136,7 +136,7 @@ myApp.controllers = {
       for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
         if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
           let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
-          if (dataTemp.title === element.querySelector('.list-item__center').textContent){
+          if (dataTemp.title === element.querySelector('.list-item__center > .title').textContent){
             dataTask = dataTemp;
           }
         }

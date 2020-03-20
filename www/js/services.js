@@ -34,7 +34,7 @@ myApp.services = {
           ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
           '<div class="center">' +
-            data.title +
+            '<div class="title">' + data.title + '</div>' + ((data.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) +
           '</div>' +
           '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
@@ -206,11 +206,18 @@ myApp.services = {
     },
 
     //Deletes all tasks of the app
-    deleteAllTasks : function () {
+    deleteAllTasks: function () {
       Array.prototype.forEach.call(document.querySelectorAll('[component="task"]'), function(element) {
         myApp.services.tasks.remove(element);
       });
       localStorage.setItem("compteurTODO",0);
+    },
+
+    //Format date format
+    formatDate: function (date) {
+      let newDateArray = date.split('-');
+      let newDate = newDateArray[2] + "/" + newDateArray[1] + "/" + newDateArray[0];
+      return newDate;
     }
   },
 
