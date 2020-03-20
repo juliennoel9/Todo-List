@@ -125,7 +125,6 @@ myApp.services = {
 
     // Modifies the inner data and current view of an existing task.
     update: function(taskItem, data) {
-      console.log(taskItem);
       if (data.title !== taskItem.data.title) {
         // Update title view.
         taskItem.querySelector('.center').innerHTML = data.title;
@@ -180,14 +179,13 @@ myApp.services = {
       let newDataParse = JSON.parse(tempData);
       newDataParse.idCompteur = numIdCompteur;
       newDataParse.status = oldStatus;
-      if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight)) {
+      if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
         localStorage.setItem(nameTask, JSON.stringify(newDataParse));
       }
     },
 
     // Deletes a task item and its listeners.
     remove: function(taskItem) {
-      console.log(taskItem);
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
       if (localStorage.getItem("compteurTODO")!=null){
         for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {

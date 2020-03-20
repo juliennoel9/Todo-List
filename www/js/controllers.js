@@ -106,7 +106,8 @@ myApp.controllers = {
               category: page.querySelector('#category-input').value,
               description: page.querySelector('#description-input').value,
               highlight: page.querySelector('#highlight-input').checked,
-              urgent: page.querySelector('#urgent-input').checked
+              urgent: page.querySelector('#urgent-input').checked,
+              dateFin: page.querySelector('#dateFin').value
             }
           );
 
@@ -154,6 +155,7 @@ myApp.controllers = {
     page.querySelector('#description-input').value = dataTask.description;
     page.querySelector('#highlight-input').checked = dataTask.highlight;
     page.querySelector('#urgent-input').checked = dataTask.urgent;
+    page.querySelector('#dateFin').value = dataTask.dateFin;
 
     let selector = page.querySelector('.select-input');
     for (let i = 0; i < myApp.tempStorage.categories.length; i++) {
@@ -188,7 +190,8 @@ myApp.controllers = {
                 category: page.querySelector('#category-input').value,
                 description: page.querySelector('#description-input').value,
                 ugent: element.data.urgent,
-                highlight: page.querySelector('#highlight-input').checked
+                highlight: page.querySelector('#highlight-input').checked,
+                dateFin: page.querySelector('#dateFin').value
               }
             );
 

@@ -179,7 +179,7 @@ myApp.services = {
       let newDataParse = JSON.parse(tempData);
       newDataParse.idCompteur = numIdCompteur;
       newDataParse.status = oldStatus;
-      if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight)) {
+      if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
         localStorage.setItem(nameTask, JSON.stringify(newDataParse));
       }
     },
