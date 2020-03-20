@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>Todo List</name>
+    <icon density="mdpi" height="57" src="www/img/icon.png" width="57" />
+    <description>
+        Todo List App par Julien et Loick
+    </description>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market:*" />
+    <splash density="land-hdpi" src="www/img/bundle/android/drawable-land-hdpi/screen.png" />
+    <splash density="land-ldpi" src="www/img/bundle/android/drawable-land-ldpi/screen.png" />
+    <splash density="land-mdpi" src="www/img/bundle/android/drawable-land-mdpi/screen.png" />
+    <splash density="land-xhdpi" src="www/img/bundle/android/drawable-land-xhdpi/screen.png" />
+    <splash density="land-xxhdpi" src="www/img/bundle/android/drawable-land-xxhdpi/screen.png" />
+    <splash density="land-xxxhdpi" src="www/img/bundle/android/drawable-land-xxxhdpi/screen.png" />
+    <splash density="port-hdpi" src="www/img/bundle/android/drawable-hdpi/screen.png" />
+    <splash density="port-ldpi" src="www/img/bundle/android/drawable-ldpi/screen.png" />
+    <splash density="port-mdpi" src="www/img/bundle/android/drawable-mdpi/screen.png" />
+    <splash density="port-xhdpi" src="www/img/bundle/android/drawable-xhdpi/screen.png" />
+    <splash density="port-xxhdpi" src="www/img/bundle/android/drawable-xxhdpi/screen.png" />
+    <splash density="port-xxxhdpi" src="www/img/bundle/android/drawable-xxxhdpi/screen.png" />
+    <preference name="loglevel" value="DEBUG" />
+</widget>

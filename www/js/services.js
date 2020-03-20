@@ -29,7 +29,7 @@ myApp.services = {
 
       // Task item template.
       var taskItem = ons.createElement(
-        '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
+        '<ons-list-item tappable component="task" category="' + myApp.services.categories.parseId(data.category)+ '">' +
           '<label class="left">' +
           ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
@@ -203,6 +203,14 @@ myApp.services = {
         // Check if the category has no items and remove it in that case.
         myApp.services.categories.updateRemove(taskItem.data.category);
       });
+    },
+
+    //Deletes all tasks of the app
+    deleteAllTasks : function () {
+      Array.prototype.forEach.call(document.querySelectorAll('[component="task"]'), function(element) {
+        myApp.services.tasks.remove(element);
+      });
+      localStorage.setItem("compteurTODO",0);
     }
   },
 
