@@ -1,7 +1,7 @@
 <ons-page id="newTaskPage">
   <ons-toolbar>
-    <div class="left"><ons-back-button>Todos</ons-back-button></div>
-    <div class="center">New Task</div>
+    <div class="left"><ons-back-button>Retour</ons-back-button></div>
+    <div class="center">Nouvelle tâche</div>
     <div class="right">
       <ons-if platform="android">
         <ons-toolbar-button component="button/save-task">
@@ -11,18 +11,18 @@
     </div>
   </ons-toolbar>
 
-  <ons-list-title>Add a new task</ons-list-title>
+  <ons-list-title>Créer une nouvelle tâche</ons-list-title>
   <ons-list>
     <ons-list-item modifier="nodivider">
       <div class="center">
-        <ons-input id="title-input" type="text" placeholder="I want to..." float></ons-input>
+        <ons-input id="title-input" type="text" placeholder="Je veux..." float></ons-input>
       </div>
     </ons-list-item>
     <ons-list-item modifier="nodivider">
       <div class="center">
-        <ons-input id="category-input" type="text" placeholder="Category" float></ons-input>
+        <ons-input id="category-input" type="text" placeholder="Catégorie" float></ons-input>
         <ons-select id="chooseCategory" component="select/chooseCategory">
-          <option value="category">Categories</option>
+          <option value="category">Catégories</option>
         </ons-select>
       </div>
     </ons-list-item>
@@ -38,11 +38,11 @@
     </ons-list-item>
   </ons-list>
 
-  <ons-list-title>Other options</ons-list-title>
+  <ons-list-title>Autres options</ons-list-title>
   <ons-list>
     <ons-list-item modifier="nodivider">
       <label class="center" for="inner-highlight-input">
-        Highlight?
+        Mettre en évidence ?
       </label>
       <div class="right">
         <ons-switch id="highlight-input" input-id="inner-highlight-input"></ons-switch>
@@ -50,7 +50,7 @@
     </ons-list-item>
     <ons-list-item modifier="nodivider">
       <label class="center" for="inner-urgent-input">
-        Is it urgent?
+        Urgent ?
       </label>
       <div class="right">
         <ons-switch id="urgent-input" input-id="inner-urgent-input"></ons-switch>
@@ -59,6 +59,6 @@
   </ons-list>
 
   <ons-if platform="ios other">
-    <ons-button modifier="large" component="button/save-task">Add New Task</ons-button>
+    <ons-button modifier="large" component="button/save-task">Créer la tâche</ons-button>
   </ons-if>
 </ons-page>

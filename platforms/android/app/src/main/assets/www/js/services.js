@@ -237,7 +237,7 @@ myApp.services = {
             '<ons-radio name="categoryGroup" input-id="radio-'  + categoryId + '"></ons-radio>' +
           '</div>' +
           '<label class="center" for="radio-' + categoryId + '">' +
-            (categoryLabel || 'No category') +
+            (categoryLabel || 'Pas de catégorie') +
           '</label>' +
         '</ons-list-item>'
       );

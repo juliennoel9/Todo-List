@@ -118,7 +118,7 @@ myApp.controllers = {
 
         } else {
           // Show alert if the input title is empty.
-          ons.notification.alert('You must provide a task title.');
+          ons.notification.alert('Vous devez entrer au moins un titre.');
         }
       };
     });
@@ -177,9 +177,9 @@ myApp.controllers = {
         // If input title is not empty, ask for confirmation before saving.
         ons.notification.confirm(
           {
-            title: 'Save changes?',
-            message: 'Previous data will be overwritten.',
-            buttonLabels: ['Discard', 'Save']
+            title: 'Enregistrer les changements ?',
+            message: 'Les anciens données seront écrasées.',
+            buttonLabels: ['Annuler', 'Enregistrer']
           }
         ).then(function(buttonIndex) {
           if (buttonIndex === 1) {
@@ -204,7 +204,7 @@ myApp.controllers = {
 
       } else {
         // Show alert if the input title is empty.
-        ons.notification.alert('You must provide a task title.');
+        ons.notification.alert('Vous devez entrer au moins un titre.');
       }
     };
   }

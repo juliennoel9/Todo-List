@@ -1,37 +1,37 @@
 <ons-page id="detailsTaskPage">
   <ons-toolbar>
-    <div class="left"><ons-back-button>Back</ons-back-button></div>
-    <div class="center">Task Details</div>
+    <div class="left"><ons-back-button>Retour</ons-back-button></div>
+    <div class="center">Détail</div>
     <div class="right">
       <ons-toolbar-button component="button/save-task">
         <ons-if platform="android">
           <ons-icon icon="md-save"></ons-icon>
         </ons-if>
         <ons-if platform="ios other">
-          Save
+          Enregistrer
         </ons-if>
       </ons-toolbar-button>
     </div>
   </ons-toolbar>
 
-  <ons-list-title>Modify your task</ons-list-title>
+  <ons-list-title>Modifier la tâche</ons-list-title>
   <ons-list>
     <ons-list-item modifier="nodivider">
       <ons-if platform="ios other" class="left left-label">
-        Title
+        Titre
       </ons-if>
       <div class="center">
-        <ons-input id="title-input" type="text" placeholder="I want to..." float></ons-input>
+        <ons-input id="title-input" type="text" placeholder="Je veux..." float></ons-input>
       </div>
     </ons-list-item>
     <ons-list-item modifier="nodivider">
       <ons-if platform="ios other" class="left left-label">
-        Category
+        Catégorie
       </ons-if>
       <div class="center">
-        <ons-input id="category-input" type="text" placeholder="Category" float></ons-input>
+        <ons-input id="category-input" type="text" placeholder="Catégorie" float></ons-input>
         <ons-select id="chooseCategory" component="select/chooseCategory">
-          <option value="category">Categories</option>
+          <option value="category">Catégories</option>
         </ons-select>
       </div>
     </ons-list-item>
@@ -50,11 +50,11 @@
     </ons-list-item>
   </ons-list>
 
-  <ons-list-title>Other options</ons-list-title>
+  <ons-list-title>Autres options</ons-list-title>
   <ons-list>
     <ons-list-item modifier="nodivider">
       <label class="center" for="inner-highlight-input">
-        Highlight?
+        Mettre en évidence ?
       </label>
       <div class="right">
         <ons-switch id="highlight-input" input-id="inner-highlight-input"></ons-switch>
@@ -62,7 +62,7 @@
     </ons-list-item>
     <ons-list-item modifier="nodivider">
       <label class="center" for="inner-urgent-input">
-        Is it urgent?
+        Urgent ?
       </label>
       <div class="right">
         <ons-switch id="urgent-input" input-id="inner-urgent-input" disabled></ons-switch>
