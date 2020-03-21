@@ -34,7 +34,7 @@ myApp.services = {
           ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
           '<div class="center">' +
-            '<div class="title">' + data.title + '</div>' + ((data.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) +
+            '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>' +
           '</div>' +
           '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
@@ -181,6 +181,7 @@ myApp.services = {
       newDataParse.status = oldStatus;
       if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
         localStorage.setItem(nameTask, JSON.stringify(newDataParse));
+        taskItem.querySelector('.list-item__center > .dateFin').innerHTML = ((newDataParse.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(newDataParse.dateFin)) : (''));
       }
     },
 

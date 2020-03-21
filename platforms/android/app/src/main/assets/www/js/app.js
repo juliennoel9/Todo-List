@@ -24,7 +24,16 @@ document.addEventListener('init', function(event) {
         for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
           if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
             let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
-            myApp.services.tasks.create(dataTemp);
+            if (dataTemp.dateFin!==""){
+              dateFinArray = dataTemp.dateFin.split('-');
+              if (Date.UTC(parseInt(dateFinArray[0]),parseInt(dateFinArray[1])-1, parseInt(dateFinArray[2])) <= Date.now()){
+                localStorage.removeItem("todo-"+dataTemp.idCompteur);
+              }else {
+                myApp.services.tasks.create(dataTemp);
+              }
+            }else {
+              myApp.services.tasks.create(dataTemp);
+            }
           }
         }
       }
