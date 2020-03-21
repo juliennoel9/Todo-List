@@ -37,7 +37,7 @@ myApp.services = {
             '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>' +
           '</div>' +
           '<div class="right">' +
-            '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
+            '<ons-icon style="color: grey; padding-left: 4px" icon="ion-trash-b" size="24px" style="color: red;"></ons-icon>' +
           '</div>' +
         '</ons-list-item>'
       );
