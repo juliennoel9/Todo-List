@@ -1,5 +1,5 @@
 // App logic
-window.myApp = {tempStorage : {categories : []}};
+window.myApp = {tempStorage : {categories : [], selectedCategory : ''}};
 
 document.addEventListener('init', function(event) {
   var page = event.target;

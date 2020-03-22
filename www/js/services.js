@@ -219,7 +219,18 @@ myApp.services = {
       let newDateArray = date.split('-');
       let newDate = newDateArray[2] + "/" + newDateArray[1] + "/" + newDateArray[0];
       return newDate;
-    }
+    },
+
+    deleteCategoryTasks: function (categoryLabel) {
+      Array.prototype.forEach.call(document.querySelectorAll('[component="task"]'), function(element) {
+        if (!(categoryLabel === null || categoryLabel === "")) {
+          if (element.data.category === categoryLabel){
+            localStorage.removeItem("todo-"+element.data.idCompteur);
+            myApp.services.tasks.remove(element);
+          }
+        }
+      });
+    },
   },
 
   /////////////////////
@@ -304,6 +315,14 @@ myApp.services = {
       };
 
       categoryItem.addEventListener('change', categoryItem.updateCategoryView);
+      categoryItem.addEventListener('change', ()=>{
+        myApp.tempStorage.selectedCategory=categoryItem.getAttribute('category-id');
+        if (!(myApp.tempStorage.selectedCategory === null || myApp.tempStorage.selectedCategory === "")) {
+          document.querySelector('#deleteSelectedCategory').disabled = false;
+        }else {
+          document.querySelector('#deleteSelectedCategory').disabled = true
+        }
+      });
     },
 
     // Transforms a category name into a valid id.

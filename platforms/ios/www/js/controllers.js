@@ -26,7 +26,7 @@ myApp.controllers = {
       ons.notification.confirm(
           {
             title: 'Supprimer toutes les tâches',
-            message: 'Attention cette action est irrversible.',
+            message: 'Attention cette action est irréversible.',
             buttonLabels: ['Annuler', 'Supprimer']
           }
       ).then(function(buttonIndex) {
@@ -60,13 +60,32 @@ myApp.controllers = {
       ons.notification.confirm(
           {
             title: 'Supprimer toutes les tâches',
-            message: 'Attention cette action est irrversible.',
+            message: 'Attention cette action est irréversible.',
             buttonLabels: ['Annuler', 'Supprimer']
           }
       ).then(function(buttonIndex) {
         if (buttonIndex === 1) {
           // If 'Supprimer' button was pressed, delete all the tasks.
           myApp.services.tasks.deleteAllTasks();
+          // Set selected category to 'All', refresh and pop page.
+          document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
+          document.querySelector('#default-category-list ons-list-item').updateCategoryView();
+          document.querySelector('#myNavigator').popPage();
+        }
+      });
+    };
+
+    page.querySelector('#deleteSelectedCategory').onclick = function() {
+      ons.notification.confirm(
+          {
+            title: 'Supprimer les tâches de la catégorie en cours',
+            message: 'Attention cette action est irréversible.',
+            buttonLabels: ['Annuler', 'Supprimer']
+          }
+      ).then(function(buttonIndex) {
+        if (buttonIndex === 1) {
+          // If 'Supprimer' button was pressed, delete all the tasks.
+          myApp.services.tasks.deleteCategoryTasks(myApp.tempStorage.selectedCategory);
           // Set selected category to 'All', refresh and pop page.
           document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
           document.querySelector('#default-category-list ons-list-item').updateCategoryView();
