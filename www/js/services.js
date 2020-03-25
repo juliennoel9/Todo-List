@@ -29,12 +29,12 @@ myApp.services = {
 
       // Task item template.
       var taskItem = ons.createElement(
-        '<ons-list-item tappable component="task" category="' + myApp.services.categories.parseId(data.category)+ '">' +
+        '<ons-list-item tappable component="task" category="' + myApp.services.categories.parseId(data.category)+ '" style="background-color: #1a1a1a">' +
           '<label class="left">' +
           ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
           '<div class="center">' +
-            '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>' +
+            '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>' +
           '</div>' +
           '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-trash-b" size="24px" style="color: red;"></ons-icon>' +
@@ -181,7 +181,7 @@ myApp.services = {
       newDataParse.status = oldStatus;
       if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
         localStorage.setItem(nameTask, JSON.stringify(newDataParse));
-        taskItem.querySelector('.list-item__center > .dateFin').innerHTML = ((newDataParse.dateFin!=="") ? ('&nbsp;- Fin le : ' + myApp.services.tasks.formatDate(newDataParse.dateFin)) : (''));
+        taskItem.querySelector('.list-item__center > .dateFin').innerHTML = ((newDataParse.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(newDataParse.dateFin)) : (''));
       }
     },
 
