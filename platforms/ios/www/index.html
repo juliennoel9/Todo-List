@@ -81,11 +81,11 @@
                     <div class="right">
                         <!-- Toolbar-button  only visible for iOS/other. -->
                         <ons-toolbar-button component="button/deleteAllTasksToolBar">
-                            <ons-icon icon="ion-trash-b" size="24px" style="color: red;"></ons-icon>
+                            <ons-icon icon="ion-trash-b" size="24px"></ons-icon>
                         </ons-toolbar-button>
 
                         <ons-if platform="ios other">
-                            <ons-toolbar-button component="button/new-task"><ons-icon icon="ion-plus-circled" size="24px" style="color: royalblue;"></ons-icon></ons-toolbar-button>
+                            <ons-toolbar-button component="button/new-task"><ons-icon icon="ion-plus-circled" size="24px" style="color: #63EAA7;"></ons-icon></ons-toolbar-button>
                         </ons-if>
                     </div>
                 </ons-toolbar>
@@ -96,6 +96,24 @@
                         <ons-icon icon="md-edit"></ons-icon>
                     </ons-fab>
                 </ons-if>
+
+                <ons-speed-dial position="bottom left" direction="up">
+                    <ons-fab>
+                        <ons-icon icon="md-sort"></ons-icon>
+                    </ons-fab>
+                    <ons-speed-dial-item component="button/sort-num-desc">
+                        <ons-icon icon="fa-sort-numeric-desc"></ons-icon>
+                    </ons-speed-dial-item>
+                    <ons-speed-dial-item component="button/sort-num">
+                        <ons-icon icon="fa-sort-numeric-asc"></ons-icon>
+                    </ons-speed-dial-item>
+                    <ons-speed-dial-item component="button/sort-alpha-desc">
+                        <ons-icon icon="md-sort-desc"></ons-icon>
+                    </ons-speed-dial-item>
+                    <ons-speed-dial-item component="button/sort-alpha">
+                        <ons-icon icon="md-sort-asc"></ons-icon>
+                    </ons-speed-dial-item>
+                </ons-speed-dial>
 
                 <!-- Auto-positioned Tabbar: top on Android, bottom on iOS/other. -->
                 <ons-tabbar id="myTabbar" position="auto">

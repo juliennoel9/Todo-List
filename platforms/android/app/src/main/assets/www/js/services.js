@@ -228,8 +228,31 @@ myApp.services = {
           '<label class="center" for="radio-' + categoryId + '">' +
             (categoryLabel || 'Pas de catégorie') +
           '</label>' +
+          '<div class="right">' +
+            '<ons-icon style="padding-left: 4px; color: #63EAA7" icon="ion-trash-b" size="24px"></ons-icon>' +
+          '</div>' +
         '</ons-list-item>'
       );
+
+      // Add button functionality to remove a category and therefore all its tasks.
+      categoryItem.querySelector('.right').onclick = function() {
+        ons.notification.confirm(
+            {
+              title: 'Supprimer les tâches de la catégorie ' + categoryItem.getAttribute("category-id") ,
+              message: 'Attention cette action est irréversible.',
+              buttonLabels: ['Annuler', 'Supprimer']
+            }
+        ).then(function(buttonIndex) {
+          if (buttonIndex === 1) {
+            // If 'Supprimer' button was pressed, delete all the tasks.
+            myApp.services.tasks.deleteCategoryTasks(categoryItem.getAttribute("category-id"));
+            // Set selected category to 'All', refresh and pop page.
+            document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
+            document.querySelector('#default-category-list ons-list-item').updateCategoryView();
+            document.querySelector('#myNavigator').popPage();
+          }
+        });
+      };
 
       // Adds filtering functionality to this category item.
       myApp.services.categories.bindOnCheckboxChange(categoryItem);
@@ -292,14 +315,6 @@ myApp.services = {
       };
 
       categoryItem.addEventListener('change', categoryItem.updateCategoryView);
-      categoryItem.addEventListener('change', ()=>{
-        myApp.tempStorage.selectedCategory=categoryItem.getAttribute('category-id');
-        if (!(myApp.tempStorage.selectedCategory === null || myApp.tempStorage.selectedCategory === "")) {
-          document.querySelector('#deleteSelectedCategory').disabled = false;
-        }else {
-          document.querySelector('#deleteSelectedCategory').disabled = true
-        }
-      });
     },
 
     // Transforms a category name into a valid id.
