@@ -36,4 +36,8 @@ document.addEventListener('init', function(event) {
       }
     }
   }
+
+  dragula([document.getElementById('completed-list'), document.getElementById('inProgress-list'), document.getElementById('pending-list')], {
+    revertOnSpill: true
+  });
 });
