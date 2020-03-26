@@ -19,7 +19,18 @@ myApp.services = {
 
       let taskStatus = 'pending';
 
+      //dateTask < current date
+      function dateIsBeforeToday(dateTask) {
+        let intDateTask = new Date(dateTask).getTime();
+        let currentDate = new Date();
+        let intCurrentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).getTime();
+        return intDateTask < intCurrentDate+86400000;
+      }
+
       let dataStorage = JSON.parse(JSON.stringify(data));
+      if (dateIsBeforeToday(dataStorage.dateFin)){
+        dataStorage.dateFin = "";
+      }
       if (typeof (data.idCompteur) == "undefined"){
         dataStorage.idCompteur = localStorage.getItem("compteurTODO");
         dataStorage.status = 'pending';
@@ -34,7 +45,7 @@ myApp.services = {
           ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
           '<div class="center">' +
-            '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>' +
+            '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((dataStorage.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(dataStorage.dateFin)) : ('')) + '</div>' +
           '</div>' +
           '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-trash-b" size="24px" style="color: red;"></ons-icon>' +
@@ -162,6 +173,19 @@ myApp.services = {
 
       let tempData = JSON.stringify(JSON.parse(JSON.stringify(data)));
       let newDataParse = JSON.parse(tempData);
+
+      //dateTask < current date
+      function dateIsBeforeToday(dateTask) {
+        let intDateTask = new Date(dateTask).getTime();
+        let currentDate = new Date();
+        let intCurrentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).getTime();
+        return intDateTask < intCurrentDate+86400000;
+      }
+
+      if (dateIsBeforeToday(newDataParse.dateFin) && newDataParse.dateFin !== ""){
+        newDataParse.dateFin = taskItem.data.dateFin;
+      }
+
       //newDataParse.idCompteur = numIdCompteur;
       newDataParse.idCompteur = taskItem.data.idCompteur;
       newDataParse.status = oldStatus;
