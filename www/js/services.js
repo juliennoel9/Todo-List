@@ -43,7 +43,7 @@ myApp.services = {
       );
 
       // Store data within the element.
-      taskItem.data = data;
+      taskItem.data = dataStorage;
 
       // Add 'completion' functionality when the checkbox changes.
       taskItem.data.onCheckboxChange = function(event) {
@@ -59,6 +59,7 @@ myApp.services = {
             let newTaskData = JSON.parse(localStorage.getItem('todo-'+compteur));
             newTaskData.status = 'inProgress';
             taskStatus = 'inProgress';
+            taskItem.data.status = 'inProgress';
             localStorage.setItem('todo-'+compteur, JSON.stringify(newTaskData));
             //myApp.services.tasks.update(taskItem,newData);
           }
@@ -71,6 +72,7 @@ myApp.services = {
             let newTaskData = JSON.parse(localStorage.getItem('todo-'+compteur));
             newTaskData.status = 'completed';
             taskStatus = 'completed';
+            taskItem.data.status = 'completed';
             localStorage.setItem('todo-'+compteur, JSON.stringify(newTaskData));
             //myApp.services.tasks.update(taskItem,newData);
           }
@@ -83,6 +85,7 @@ myApp.services = {
             let newTaskData = JSON.parse(localStorage.getItem('todo-'+compteur));
             newTaskData.status = 'pending';
             taskStatus = 'pending';
+            taskItem.data.status = 'pending';
             localStorage.setItem('todo-'+compteur, JSON.stringify(newTaskData));
             //myApp.services.tasks.update(taskItem,newData);
           }
@@ -127,7 +130,7 @@ myApp.services = {
     update: function(taskItem, data) {
       if (data.title !== taskItem.data.title) {
         // Update title view.
-        taskItem.querySelector('.center').innerHTML = data.title;
+        taskItem.querySelector('.center').innerHTML = '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>';
       }
 
       if (data.category !== taskItem.data.category) {
@@ -143,41 +146,24 @@ myApp.services = {
       // Add or remove the highlight.
       taskItem.classList[data.highlight ? 'add' : 'remove']('highlight');
 
-      let numIdCompteur;
       let oldStatus;
 
-      // if (typeof JSON.parse(JSON.stringify(taskItem.data)).idCompteur != "undefined"){
-      //   numIdCompteur = JSON.parse(JSON.stringify(taskItem.data)).idCompteur;
-      //   oldStatus = JSON.parse(JSON.stringify(taskItem.data)).status;
-      // }else if (typeof JSON.parse(JSON.stringify(data)).idCompteur != "undefined"){
-      //   numIdCompteur = JSON.parse(JSON.stringify(data)).idCompteur;
-      //   oldStatus = JSON.parse(JSON.stringify(data)).status;
-      // }else{
-        if (localStorage.getItem("compteurTODO")!=null){
-          for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
-            if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
-              let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
-              if (dataTemp.title === JSON.parse(JSON.stringify(taskItem.data)).title && dataTemp.description === JSON.parse(JSON.stringify(taskItem.data)).description){
-                numIdCompteur = i;
-                if (typeof JSON.parse(JSON.stringify(data)).status != "undefined"){
-                  oldStatus = JSON.parse(JSON.stringify(data)).status;
-                }else {
-                  oldStatus = dataTemp.status;
-                }
-              }
-            }
-          }
-        }
-      // }
+      let dataTemp = JSON.parse(localStorage.getItem("todo-"+taskItem.data.idCompteur));
+      if (typeof JSON.parse(JSON.stringify(data)).status != "undefined"){
+        oldStatus = JSON.parse(JSON.stringify(data)).status;
+      }else {
+        oldStatus = dataTemp.status;
+      }
 
-      let nameTask = "todo-"+numIdCompteur;
+      let nameTask = "todo-"+taskItem.data.idCompteur;
 
       // Store the new data within the element.
       //taskItem.data = JSON.parse(JSON.stringify(data));
 
       let tempData = JSON.stringify(JSON.parse(JSON.stringify(data)));
       let newDataParse = JSON.parse(tempData);
-      newDataParse.idCompteur = numIdCompteur;
+      //newDataParse.idCompteur = numIdCompteur;
+      newDataParse.idCompteur = taskItem.data.idCompteur;
       newDataParse.status = oldStatus;
       if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
         localStorage.setItem(nameTask, JSON.stringify(newDataParse));
@@ -188,16 +174,7 @@ myApp.services = {
     // Deletes a task item and its listeners.
     remove: function(taskItem) {
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
-      if (localStorage.getItem("compteurTODO")!=null){
-        for (let i = 0; i < parseInt(localStorage.getItem("compteurTODO")); i++) {
-          if (typeof(localStorage.getItem("todo-"+i))!="undefined" && localStorage.getItem("todo-"+i)!=null){
-            let dataTemp = JSON.parse(localStorage.getItem("todo-"+i));
-            if (dataTemp.title === taskItem.parentElement.lastChild.childNodes[1].textContent){
-              localStorage.removeItem("todo-"+i);
-            }
-          }
-        }
-      }
+      localStorage.removeItem("todo-" + taskItem.data.idCompteur);
       myApp.services.animators.remove(taskItem, function() {
         // Remove the item before updating the categories.
         taskItem.remove();
@@ -358,67 +335,5 @@ myApp.services = {
         callback();
       }, 750);
     }
-  },
-
-  ////////////////////////
-  // Initial Data Service //
-  ////////////////////////
-  fixtures: [
-    {
-      title: 'Download OnsenUI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Install Monaca CLI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Star Onsen UI repo on Github',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Register in the community forum',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Send donations to Fran and Andreas',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Profit',
-      category: '',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Visit Japan',
-      category: 'Travels',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Enjoy an Onsen with Onsen UI team',
-      category: 'Personal',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    }
-  ]
+  }
 };

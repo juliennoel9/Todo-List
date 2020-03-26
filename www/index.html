@@ -93,9 +93,27 @@
                 <!-- Floating Action Button only visible for Android. -->
                 <ons-if platform="android">
                     <ons-fab position="right bottom" component="button/new-task">
-                        <ons-icon icon="md-edit" style="background-color: #63EAA7"></ons-icon>
+                        <ons-icon icon="md-edit"></ons-icon>
                     </ons-fab>
                 </ons-if>
+
+                <ons-speed-dial position="bottom left" direction="up">
+                    <ons-fab>
+                        <ons-icon icon="md-sort"></ons-icon>
+                    </ons-fab>
+                    <ons-speed-dial-item component="button/sort-num-desc">
+                        <ons-icon icon="fa-sort-numeric-desc"></ons-icon>
+                    </ons-speed-dial-item>
+                    <ons-speed-dial-item component="button/sort-num">
+                        <ons-icon icon="fa-sort-numeric-asc"></ons-icon>
+                    </ons-speed-dial-item>
+                    <ons-speed-dial-item component="button/sort-alpha-desc">
+                        <ons-icon icon="md-sort-desc"></ons-icon>
+                    </ons-speed-dial-item>
+                    <ons-speed-dial-item component="button/sort-alpha">
+                        <ons-icon icon="md-sort-asc"></ons-icon>
+                    </ons-speed-dial-item>
+                </ons-speed-dial>
 
                 <!-- Auto-positioned Tabbar: top on Android, bottom on iOS/other. -->
                 <ons-tabbar id="myTabbar" position="auto">

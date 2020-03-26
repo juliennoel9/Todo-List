@@ -41,6 +41,193 @@ myApp.controllers = {
       });
     };
 
+    page.querySelector('[component="button/sort-alpha"]').onclick = function () {
+      let state = '';
+      if (page.querySelector("#pendingTasksPage")._isShown) {
+        state = 'pending';
+      } else if (page.querySelector("#inProgressTasksPage")._isShown) {
+        state = 'inProgress';
+      } else if (page.querySelector("#completedTasksPage")._isShown) {
+        state = 'completed';
+      }
+
+      let listItemAll = document.querySelectorAll('[category]');
+      let tab = Array.from(listItemAll);
+      tab.slice().reverse().forEach(function (item, index, object) {
+        if (item.data.status !== state) {
+          tab.splice(object.length - 1 - index, 1);
+        }
+      });
+      function trier(tab, n) {
+        if (tab.length >= 2) {
+          if (n + 1 < tab.length) {
+            if (tab[n].data.title.localeCompare(tab[n + 1].data.title) > 0) {
+              tab[n + 1].parentNode.insertBefore(tab[n + 1], tab[n]);
+              listItemAll = document.querySelectorAll('[category]');
+              tab = Array.from(listItemAll);
+              tab.slice().reverse().forEach(function (item, index, object) {
+                if (item.data.status !== state) {
+                  tab.splice(object.length - 1 - index, 1);
+                }
+              });
+              trier(tab, 0);
+            } else {
+              trier(tab, n + 1);
+            }
+          }
+        }
+      }
+
+      trier(tab, 0);
+    };
+
+    page.querySelector('[component="button/sort-alpha-desc"]').onclick = function () {
+      let state = '';
+      if (page.querySelector("#pendingTasksPage")._isShown) {
+        state = 'pending';
+      } else if (page.querySelector("#inProgressTasksPage")._isShown) {
+        state = 'inProgress';
+      } else if (page.querySelector("#completedTasksPage")._isShown) {
+        state = 'completed';
+      }
+
+      let listItemAll = document.querySelectorAll('[category]');
+      let tab = Array.from(listItemAll);
+      tab.slice().reverse().forEach(function (item, index, object) {
+        if (item.data.status !== state) {
+          tab.splice(object.length - 1 - index, 1);
+        }
+      });
+
+      function trier(tab, n) {
+        if (tab.length >= 2) {
+          if (n + 1 < tab.length) {
+            if (tab[n].data.title.localeCompare(tab[n + 1].data.title) < 0) {
+              tab[n + 1].parentNode.insertBefore(tab[n + 1], tab[n]);
+              listItemAll = document.querySelectorAll('[category]');
+              tab = Array.from(listItemAll);
+              tab.slice().reverse().forEach(function (item, index, object) {
+                if (item.data.status !== state) {
+                  tab.splice(object.length - 1 - index, 1);
+                }
+              });
+              trier(tab, 0);
+            } else {
+              trier(tab, n + 1);
+            }
+          }
+        }
+      }
+
+      trier(tab, 0);
+    };
+
+    page.querySelector('[component="button/sort-num"]').onclick = function () {
+      let state = '';
+      if (page.querySelector("#pendingTasksPage")._isShown) {
+        state = 'pending';
+      } else if (page.querySelector("#inProgressTasksPage")._isShown) {
+        state = 'inProgress';
+      } else if (page.querySelector("#completedTasksPage")._isShown) {
+        state = 'completed';
+      }
+
+      let listItemAll = document.querySelectorAll('[category]');
+      let tab = Array.from(listItemAll);
+      tab.slice().reverse().forEach(function (item, index, object) {
+        if (item.data.status !== state) {
+          tab.splice(object.length - 1 - index, 1);
+        }
+      });
+
+      function trier(tab, n) {
+        if (tab.length >= 2) {
+          if (n + 1 < tab.length) {
+            let deadline1 = new Date(tab[n].data.dateFin);
+            let deadline2 = new Date(tab[n + 1].data.dateFin);
+            if (!tab[n].data.dateFin && tab[n + 1].data.dateFin) {
+              tab[n + 1].parentNode.insertBefore(tab[n + 1], tab[n]);
+              listItemAll = document.querySelectorAll('[category]');
+              tab = Array.from(listItemAll);
+              tab.slice().reverse().forEach(function (item, index, object) {
+                if (item.data.status !== state) {
+                  tab.splice(object.length - 1 - index, 1);
+                }
+              });
+              trier(tab, 0);
+            } else if (deadline1.getTime() > deadline2.getTime() && tab[n].data.dateFin && tab[n + 1].data.dateFin) {
+              tab[n + 1].parentNode.insertBefore(tab[n + 1], tab[n]);
+              listItemAll = document.querySelectorAll('[category]');
+              tab = Array.from(listItemAll);
+              tab.slice().reverse().forEach(function (item, index, object) {
+                if (item.data.status !== state) {
+                  tab.splice(object.length - 1 - index, 1);
+                }
+              });
+              trier(tab, 0);
+            } else {
+              trier(tab, n + 1);
+            }
+          }
+        }
+      }
+
+      trier(tab, 0);
+    };
+
+    page.querySelector('[component="button/sort-num-desc"]').onclick = function () {
+      let state = '';
+      if (page.querySelector("#pendingTasksPage")._isShown) {
+        state = 'pending';
+      } else if (page.querySelector("#inProgressTasksPage")._isShown) {
+        state = 'inProgress';
+      } else if (page.querySelector("#completedTasksPage")._isShown) {
+        state = 'completed';
+      }
+
+      let listItemAll = document.querySelectorAll('[category]');
+      let tab = Array.from(listItemAll);
+      tab.slice().reverse().forEach(function (item, index, object) {
+        if (item.data.status !== state) {
+          tab.splice(object.length - 1 - index, 1);
+        }
+      });
+
+      function trier(tab, n) {
+        if (tab.length >= 2) {
+          if (n + 1 < tab.length) {
+            let deadline1 = new Date(tab[n].data.dateFin);
+            let deadline2 = new Date(tab[n + 1].data.dateFin);
+            if (!tab[n].data.dateFin && tab[n + 1].data.dateFin) {
+              tab[n + 1].parentNode.insertBefore(tab[n + 1], tab[n]);
+              listItemAll = document.querySelectorAll('[category]');
+              tab = Array.from(listItemAll);
+              tab.slice().reverse().forEach(function (item, index, object) {
+                if (item.data.status !== state) {
+                  tab.splice(object.length - 1 - index, 1);
+                }
+              });
+              trier(tab, 0);
+            } else if (deadline1.getTime() < deadline2.getTime() && tab[n].data.dateFin && tab[n + 1].data.dateFin) {
+              tab[n + 1].parentNode.insertBefore(tab[n + 1], tab[n]);
+              listItemAll = document.querySelectorAll('[category]');
+              tab = Array.from(listItemAll);
+              tab.slice().reverse().forEach(function (item, index, object) {
+                if (item.data.status !== state) {
+                  tab.splice(object.length - 1 - index, 1);
+                }
+              });
+              trier(tab, 0);
+            } else {
+              trier(tab, n + 1);
+            }
+          }
+        }
+      }
+
+      trier(tab, 0);
+    };
+
     // Change tabbar animation depending on platform.
     page.querySelector('#myTabbar').setAttribute('animation', ons.platform.isAndroid() ? 'slide' : 'none');
   },
@@ -104,6 +291,7 @@ myApp.controllers = {
     for (let i = 0; i < myApp.tempStorage.categories.length; i++) {
       let newChild = document.createElement("option");
       newChild.setAttribute("value", myApp.tempStorage.categories[i]);
+      newChild.setAttribute("style", "color: black;");
       newChild.innerText = myApp.tempStorage.categories[i];
       selector.append(newChild);
     }
@@ -162,13 +350,6 @@ myApp.controllers = {
       }
     }
 
-    // Fill the view with the stored data.
-    // page.querySelector('#title-input').value = element.data.title;
-    // page.querySelector('#category-input').value = element.data.category;
-    // page.querySelector('#description-input').value = element.data.description;
-    // page.querySelector('#highlight-input').checked = element.data.highlight;
-    // page.querySelector('#urgent-input').checked = element.data.urgent;
-
     page.querySelector('#title-input').value = dataTask.title;
     page.querySelector('#category-input').value = dataTask.category;
     page.querySelector('#description-input').value = dataTask.description;
@@ -180,6 +361,7 @@ myApp.controllers = {
     for (let i = 0; i < myApp.tempStorage.categories.length; i++) {
       let newChild = document.createElement("option");
       newChild.setAttribute("value", myApp.tempStorage.categories[i]);
+      newChild.setAttribute("style", "color: black;");
       newChild.innerText = myApp.tempStorage.categories[i];
       selector.append(newChild);
     }
