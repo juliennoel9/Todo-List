@@ -28,6 +28,7 @@ myApp.services = {
       }
 
       let dataStorage = JSON.parse(JSON.stringify(data));
+      dataStorage.category = dataStorage.category.toLowerCase();
       if (dateIsBeforeToday(dataStorage.dateFin)){
         dataStorage.dateFin = "";
       }
@@ -40,7 +41,7 @@ myApp.services = {
 
       // Task item template.
       var taskItem = ons.createElement(
-        '<ons-list-item tappable component="task" category="' + myApp.services.categories.parseId(data.category)+ '" style="background-color: #1a1a1a">' +
+        '<ons-list-item tappable component="task" category="' + myApp.services.categories.parseId(data.category.toLowerCase())+ '" style="background-color: #1a1a1a">' +
           '<label class="left">' +
           ((dataStorage.status==='completed') ? '<ons-checkbox checked="true"></ons-checkbox>' : '<ons-checkbox></ons-checkbox>') +
           '</label>' +
@@ -125,7 +126,7 @@ myApp.services = {
       };
 
       // Check if it's necessary to create new categories for this item.
-      myApp.services.categories.updateAdd(taskItem.data.category);
+      myApp.services.categories.updateAdd(taskItem.data.category.toLowerCase());
 
       // Add the highlight if necessary.
       if (taskItem.data.highlight) {
@@ -144,13 +145,13 @@ myApp.services = {
         taskItem.querySelector('.center').innerHTML = '<div class="title">' + data.title + '</div>' + '<div class="dateFin">' + ((data.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(data.dateFin)) : ('')) + '</div>';
       }
 
-      if (data.category !== taskItem.data.category) {
+      if (data.category.toLowerCase() !== taskItem.data.category.toLowerCase()) {
         // Modify the item before updating categories.
-        taskItem.setAttribute('category', myApp.services.categories.parseId(data.category));
+        taskItem.setAttribute('category', myApp.services.categories.parseId(data.category.toLowerCase()));
         // Check if it's necessary to create new categories.
-        myApp.services.categories.updateAdd(data.category);
+        myApp.services.categories.updateAdd(data.category.toLowerCase());
         // Check if it's necessary to remove empty categories.
-        myApp.services.categories.updateRemove(taskItem.data.category);
+        myApp.services.categories.updateRemove(taskItem.data.category.toLowerCase());
 
       }
 
@@ -189,7 +190,8 @@ myApp.services = {
       //newDataParse.idCompteur = numIdCompteur;
       newDataParse.idCompteur = taskItem.data.idCompteur;
       newDataParse.status = oldStatus;
-      if (!(data.title === taskItem.data.title && data.category === taskItem.data.category && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
+      newDataParse.category = newDataParse.category.toLowerCase();
+      if (!(data.title === taskItem.data.title && data.category.toLowerCase() === taskItem.data.category.toLowerCase() && data.description === taskItem.data.description && data.highlight === taskItem.data.highlight && data.dateFin === taskItem.data.dateFin)) {
         localStorage.setItem(nameTask, JSON.stringify(newDataParse));
         taskItem.querySelector('.list-item__center > .dateFin').innerHTML = ((newDataParse.dateFin!=="") ? ('&nbsp; &#9200; ' + myApp.services.tasks.formatDate(newDataParse.dateFin)) : (''));
       }
@@ -203,7 +205,7 @@ myApp.services = {
         // Remove the item before updating the categories.
         taskItem.remove();
         // Check if the category has no items and remove it in that case.
-        myApp.services.categories.updateRemove(taskItem.data.category);
+        myApp.services.categories.updateRemove(taskItem.data.category.toLowerCase());
       });
     },
 
@@ -225,7 +227,7 @@ myApp.services = {
     deleteCategoryTasks: function (categoryLabel) {
       Array.prototype.forEach.call(document.querySelectorAll('[component="task"]'), function(element) {
         if (!(categoryLabel === null || categoryLabel === "")) {
-          if (element.data.category === categoryLabel){
+          if (element.data.category.toLowerCase() === categoryLabel.toLowerCase()){
             localStorage.removeItem("todo-"+element.data.idCompteur);
             myApp.services.tasks.remove(element);
           }
@@ -269,7 +271,7 @@ myApp.services = {
         ).then(function(buttonIndex) {
           if (buttonIndex === 1) {
             // If 'Supprimer' button was pressed, delete all the tasks.
-            myApp.services.tasks.deleteCategoryTasks(categoryItem.getAttribute("category-id"));
+            myApp.services.tasks.deleteCategoryTasks(categoryItem.getElementsByClassName("center")[0].textContent.toLowerCase());
             // Set selected category to 'All', refresh and pop page.
             document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
             document.querySelector('#default-category-list ons-list-item').updateCategoryView();

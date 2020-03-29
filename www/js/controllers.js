@@ -332,7 +332,7 @@ myApp.controllers = {
     }
 
     page.querySelector('#title-input').value = dataTask.title;
-    page.querySelector('#category-input').value = dataTask.category;
+    page.querySelector('#category-input').value = dataTask.category.toLowerCase();
     page.querySelector('#description-input').value = dataTask.description;
     page.querySelector('#highlight-input').checked = dataTask.highlight;
     page.querySelector('#urgent-input').checked = dataTask.urgent;
