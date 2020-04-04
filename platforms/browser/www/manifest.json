@@ -1,0 +1,16 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Todo List",
+  "short_name": "Todo List",
+  "version": "io.cordova.hellocordova",
+  "description": "Todo List App par Julien et Loick",
+  "icons": [
+    {
+      "src": "www/img/icon.png",
+      "type": "image/png",
+      "sizes": "57x57"
+    }
+  ],
+  "start_url": "index.html"
+}
